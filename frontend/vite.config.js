@@ -18,19 +18,11 @@ export default defineConfig(({ mode }) => {
     plugins: [react(), tailwindcss()],
     server: {
       proxy: {
-        '/api': {
-          target: env.VITE_SERVER,
-          changeOrigin: true,
+        '/api/':  env.VITE_SERVER,
+      
        
-        },
+        
       },
-    },
-    // Consider adding build configuration
-    build: {
-      outDir: 'dist',
-      rollupOptions: {
-        // Additional bundling options if needed
-      }
-    }
-  };
-});
+    
+   
+}}});
