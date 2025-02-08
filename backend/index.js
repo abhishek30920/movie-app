@@ -5,59 +5,46 @@ import dotenv from 'dotenv';
 import path from 'path';
 import cookieParser from 'cookie-parser';
 import connectDB from './config/db.js';
-import userRoutes from './routes/User.route.js';
-import genreRoutes from './routes/Genre.route.js';
+import userRoutes from './routes/User.route.js' 
+import genreRoutes from './routes/Genre.route.js'
 import movieRoutes from './routes/movies.route.js';
 import uploadRoutes from './routes/upload.route.js';
+const app=express();
 
-dotenv.config(); // Load environment variables
 
-const app = express();
-const FRONTEND_URL = process.env.URL 
-
-// Middleware
 app.use(express.json());
 app.use(bodyParser.json());
+app.use(cors(
+    
+));
 app.use(cookieParser());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({extended:true}));
 
-// ✅ Proper CORS setup
-app.use(cors({
-  origin: FRONTEND_URL,
-  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization"],
-  credentials: true // Allow cookies if needed
-}));
 
-// ✅ Handle CORS Preflight Requests
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", FRONTEND_URL);
-  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
-  res.header("Access-Control-Allow-Credentials", "true");
+dotenv.config();
 
-  if (req.method === "OPTIONS") {
-    return res.sendStatus(200);
-  }
-  
-  next();
-});
 
-// Routes
-app.use('/api/v1/users', userRoutes);
-app.use('/api/v1/genre', genreRoutes);
-app.use('/api/v1/movies', movieRoutes);
-app.use('/api/v1/upload', uploadRoutes);
+//routes
+app.use('/api/v1/users',userRoutes)
+app.use('/api/v1/genre',genreRoutes)
+app.use('/api/v1/movies',movieRoutes)
+app.use('/api/v1/upload',uploadRoutes)
 
-// Serve static files
-const __dirname = path.resolve();
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+const __dirname = path.resolve();  // this is used to get the current directory
+app.use('/uploads',express.static(path.join(__dirname,'uploads')));  // this is used to serve the static files
 
-// Connect to DB
+
+const PORT=process.env.PORT || 5000;
+
 connectDB();
 
-// Start Server
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-  console.log(`✅ Server is running on port ${PORT}`);
-});
+
+
+
+app.listen(PORT,()=>{
+    console.log(`Server is running on port ${PORT}`);
+})
+
+
+
+
