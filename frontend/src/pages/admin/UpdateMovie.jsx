@@ -143,7 +143,7 @@ const UpdateMovie = () => {
         <div className="flex items-center justify-between mb-8">
           <div className="flex items-center space-x-4">
             <button 
-              onClick={() => navigate('/admin/movies/list')}
+              onClick={() => navigate('/admin/movies-list')}
               className="p-2 hover:bg-gray-800 rounded-full transition-colors"
             >
               <ArrowLeft className="w-6 h-6" />
