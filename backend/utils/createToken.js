@@ -8,13 +8,14 @@ const createToken = (res,userId) => {
 console.log(token)
   // set jwt as an http cookie
 
-  res.cookie('token', token, {
+  res.cookie('jwt', token, {
     httpOnly: true,
-    secure: process.env.NODE_ENV !== 'development',  // Only send over HTTPS if not in development
-    sameSite: process.env.NODE_ENV === 'development' ? 'lax' : 'none',
-    maxAge: 30 * 24 * 60 * 60 * 1000 // 30 days
-  });
-  
+    secure: process.env.NODE_ENV !== 'development' ? true : false, // Secure only in production
+    maxAge: 30 * 24 * 60 * 60 * 1000,
+    sameSite: 'none',
+});
+
+
 return token
 
 }
